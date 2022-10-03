@@ -15,15 +15,12 @@ var classic_stream = new Audio("./media/trap_and_ink.wav");
 var ambient_stream = new Audio("./media/trap_and_ink.wav");
 var lofi_stream = new Audio("./media/trap_and_ink.wav");
 
-classic_stream.loop = true;
-ambient_stream.loop = true;
-lofi_stream.loop = true;
-
 var classic_playing = false;
 var ambient_playing = false;
 var lofi_playing = false;
 
 function play_classic() {
+    classic_stream.loop = true;
 
     ambient_stream.pause();
     ambient_stream.currentTime = 0;
@@ -50,6 +47,7 @@ function play_classic() {
 }
 
 function play_ambient() {
+    ambient_stream.loop = true;
 
     classic_stream.pause();
     classic_stream.currentTime = 0;
@@ -76,6 +74,7 @@ function play_ambient() {
 }
 
 function play_lofi() {
+    lofi_stream.loop = true;
 
     classic_stream.pause();
     classic_stream.currentTime = 0;
@@ -87,7 +86,7 @@ function play_lofi() {
         // configure audio stream
         lofi_stream.play();
         lofi_playing = true;
-        
+
         // toggle button styling
         document.getElementById("btn-classic").classList.remove("playing");
         document.getElementById("btn-ambient").classList.remove("playing");
