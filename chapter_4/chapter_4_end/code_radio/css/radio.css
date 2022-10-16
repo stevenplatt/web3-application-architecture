@@ -1,5 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+body {
+    font-family: "Lato", sans-serif;
+    --text-color: #575a5e;
+    --bkg-color: #fff;
+}
+
+body.dark-theme {
+    --text-color: #eee;
+    --bkg-color: #35383d;
+}
+
+/*  begin dark mode variables */
+
+body, .bn30:after {
+    background: var(--bkg-color);
+}
+
+h1, p, button {
+    color: var(--text-color);
+}
+
+/*  end dark mode variables */
+
+.radio_main {
+    max-width: 80%;
+    margin: auto;
+}
+
 .radio_parent {
     display: flex;
     min-height: 30vh;
@@ -44,7 +72,6 @@ https://codepen.io/folaad/pen/YvmRpz */
     box-shadow: 2px 2px 20px rgba(55, 55, 225, 0.438);
     -webkit-transition: box-shadow 0.25s;
     transition: box-shadow 0.25s;
-    color: #818181;
     border-radius: 70%;
     height: 175px;
     width: 175px;
@@ -58,25 +85,24 @@ background-image: linear-gradient(45deg, #428fbb, #b06ab3);
 }
 
 .bn30:after {
-content: "";
-border-radius: 70%;
-position: absolute;
-margin: 2px;
-top: 0;
-left: 0;
-bottom: 0;
-right: 0;
-z-index: -1;
-background: white;
+    content: "";
+    border-radius: 70%;
+    position: absolute;
+    margin: 2px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
 }
 
 .bn30:hover {
-background-image: linear-gradient(-45deg, #428fbb, #dba4dd);
-box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
+    background-image: linear-gradient(-45deg, #428fbb, #dba4dd);
+    box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
 }
 
 .bn30:hover .text {
-background-image: linear-gradient(-45deg, #428fbb, #dba4dd);
+    background-image: linear-gradient(-45deg, #428fbb, #dba4dd);
 }
 
 .playing {
