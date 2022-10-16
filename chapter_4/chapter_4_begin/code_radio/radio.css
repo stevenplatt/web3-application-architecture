@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+body {
+    font-family: "Lato", sans-serif;
+}
+
 .radio_parent {
     display: flex;
     min-height: 30vh;
