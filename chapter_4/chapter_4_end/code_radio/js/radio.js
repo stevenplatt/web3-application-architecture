@@ -22,10 +22,9 @@ function getData(song) {
     objectStoreRequest.onsuccess = (event) => {
         const myRecord = objectStoreRequest.result;
         console.log(`${myRecord.url}`);
-
-        const audioTag = document.createElement("audio");
-        audioTag.src = myRecord.url;
-        audioTag.loop = true;
+        const audioURL = document.createElement("audio");
+        audioURL.src = myRecord.url;
+        audioURL.loop = true;
     };
 };
 /////////////////////////////////////
@@ -70,13 +69,13 @@ function play_classic() {
     };
     /////////////////////////////////////
 
-    audioTag.pause(); /////////////////////////////////////
-    audioTag.currentTime = 0; /////////////////////////////////////
+    audioURL.pause(); /////////////////////////////////////
+    audioURL.currentTime = 0; /////////////////////////////////////
 
     if (!classic_playing){
 
         // classic_stream.play();
-        audioTag.play(); /////////////////////////////////////
+        audioURL.play(); /////////////////////////////////////
         classic_playing = true;
 
         // toggle button styling
@@ -101,12 +100,12 @@ function play_ambient() {
         getData("trap and ink");
     };
 
-    audioTag.pause();
-    audioTag.currentTime = 0;
+    audioURL.pause();
+    audioURL.currentTime = 0;
 
     if (!ambient_playing){
         // configure audio stream
-        audioTag.play(); /////////////////////////////////////
+        audioURL.play(); /////////////////////////////////////
         ambient_playing = true;
 
         // toggle button styling
@@ -130,12 +129,12 @@ function play_lofi() {
         getData("trap and ink");
     };
 
-    audioTag.pause();
-    audioTag.currentTime = 0;
+    audioURL.pause();
+    audioURL.currentTime = 0;
 
     if (!lofi_playing){
         // configure audio stream
-        audioTag.play(); /////////////////////////////////////
+        audioURL.play(); /////////////////////////////////////
         lofi_playing = true;
 
         // toggle button styling
