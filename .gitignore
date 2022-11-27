@@ -1,0 +1,2 @@
+# ignore MacOS image data files
+*DS_Store*
