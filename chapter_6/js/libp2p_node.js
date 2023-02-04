@@ -8,7 +8,7 @@ import { floodsub } from '@libp2p/floodsub' //////////////// NEW
 import {pubsubListen, pubsubBroadcast} from './music_sync.js' //////////////// NEW
 
 const bootstrapMultiaddrs = [
-    '/ip4/127.0.0.1/tcp/54406/p2p/12D3KooWCZc6H81cwpRF35SvhXfendMsFzTavbKrDaaTmMy313XY']
+    '/ip4/127.0.0.1/tcp/65359/p2p/12D3KooWM6fnB3q4E9hTyGYQu1LJTCqjE5ChjSz9NuXK9vGDSMPx']
 
 const node = await createLibp2p({
     addresses: {listen: ['/ip4/127.0.0.1/tcp/0']},
@@ -20,7 +20,7 @@ const node = await createLibp2p({
     connectionManager: {autoDial: true},
     pubsub: floodsub()})
 
-const codeRadio = async () => {
+const startLibp2p = async () => {
     await node.start() // start libp2p
     console.log('libp2p has started, listening on addresses:')
     node.getMultiaddrs().forEach((addr) => {console.log(addr.toString())})
@@ -45,4 +45,4 @@ const stop = async () => {
 process.on('SIGTERM', stop)
 process.on('SIGINT', stop)
 
-codeRadio()
+startLibp2p()

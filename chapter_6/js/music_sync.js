@@ -9,10 +9,6 @@ const station_1 = 'classic'
 const station_2 = 'ambient'
 const station_3 = 'lofi'
 
-const stationOneTracks = []
-const stationTwoTracks = []
-const stationThreeTracks = []
-
 export function pubsubListen(node){
     node.pubsub.subscribe(station_1)
     node.pubsub.subscribe(station_2)
@@ -20,34 +16,42 @@ export function pubsubListen(node){
     node.pubsub.addEventListener('message', (evt) => {
         const trackTitle = uint8ArrayToString(evt.detail.data).split(":::")
 
-        if ( (evt.detail.topic == station_1) && (!(stationOneTracks.includes(trackTitle[0]))) ) {
-            stationOneTracks.push(trackTitle[0])
-            console.log(`new song "${trackTitle[0]}" has been added to ${evt.detail.topic}`)}
-
-        else if ( (evt.detail.topic == station_2) && (!(stationTwoTracks.includes(trackTitle[0]))) ) {
-            stationTwoTracks.push(trackTitle[0])
-            console.log(`new song "${trackTitle[0]}" has been added to ${evt.detail.topic}`)}
-        
-        else if ( (evt.detail.topic == station_3) && (!(stationThreeTracks.includes(trackTitle[0]))) ) {
-            stationThreeTracks.push(trackTitle[0])
-            console.log(`new song "${trackTitle[0]}" has been added to ${evt.detail.topic}`)}
-        
-        else {
-            console.log(`received song is already in library, ignoring...`)}})}
+        if ( (evt.detail.topic == station_1) && (!(classicSongs[trackTitle[0]])) ) {
+            console.log(`"received song "${trackTitle[1]}" by ${trackTitle[0]}"`)
+            console.log(`"adding song to the ${station_1} station..."`)
+            classicSongs[trackTitle[0]] = trackTitle[1]
+        } else if ( (evt.detail.topic == station_2) && (!(ambientSongs[trackTitle[0]])) ) {
+            console.log(`"received song "${trackTitle[1]}" by ${trackTitle[0]}"`)
+            console.log(`"adding song to the ${station_2} station..."`)
+            ambientSongs[trackTitle[0]] = trackTitle[1]
+        } else if ( (evt.detail.topic == station_3) && (!(lofiSongs[trackTitle[0]])) ) {
+            console.log(`"received song "${trackTitle[1]}" by ${trackTitle[0]}"`)
+            console.log(`"adding song to the ${station_2} station..."`)
+            lofiSongs[trackTitle[0]] = trackTitle[1]
+        } else {
+            console.log(`received song is already in library, ignoring...`)
+        }
+    })
+}
 
 export function pubsubBroadcast(node){
     setInterval(() => {
-        for (var i = 0; i < classicSongs.length; i += 1) {
+        for (const [key, value] of Object.entries(classicSongs)) {
             node.pubsub.publish(station_1, 
-                uint8ArrayFromString(`${classicSongs[i].track}:::${classicSongs[i].data}`)).catch(err => {
-                console.error(err)})}
-    
-        for (var i = 0; i < classicSongs.length; i += 1) {
-            node.pubsub.publish(station_2, 
-                uint8ArrayFromString(`${ambientSongs[i].track}:::${ambientSongs[i].data}`)).catch(err => {
-                console.error(err)})}
+                uint8ArrayFromString(`${key}:::${value}`)).catch(err => {
+                console.error(err)})
+        }
 
-        for (var i = 0; i < classicSongs.length; i += 1) {
-            node.pubsub.publish(station_3, 
-                uint8ArrayFromString(`${lofiSongs[i].track}:::${lofiSongs[i].data}`)).catch(err => {
-                console.error(err)})}}, 5000)}
+        for (const [key, value] of Object.entries(ambientSongs)) {
+            node.pubsub.publish(station_2, 
+                uint8ArrayFromString(`${key}:::${value}`)).catch(err => {
+                console.error(err)})
+        }
+
+        for (const [key, value] of Object.entries(lofiSongs)) {
+            node.pubsub.publish(station_2, 
+                uint8ArrayFromString(`${key}:::${value}`)).catch(err => {
+                console.error(err)})
+        }
+    }, 5000)
+}
