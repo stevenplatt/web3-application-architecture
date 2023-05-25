@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+
+<div class="container">
+    <h2 class="login-title">Login</h2>
+
+    <form class="login-form">
+        <div>
+        <input
+                id="pubkey"
+                type="text"
+                placeholder="Public Key"
+                name="pubkey"
+                required
+                />
+        </div>
+
+        <div>
+        <input
+                id="password"
+                type="password"
+                placeholder="Private Key"
+                name="password"
+                required
+                />
+        </div>
+
+        <button class="btn btn--form" type="submit" value="Log in">
+        Connect
+        </button>
+
+        <p class="divider"><span>or</span></p>
+
+        <button class="btn btn--form" type="submit" value="Log in">
+            Create New User
+        </button>
+    </form>
+</div>
+
+</body>
+</html>
