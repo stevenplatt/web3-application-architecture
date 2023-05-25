@@ -76,7 +76,6 @@ body {
 	border: none;
 	cursor: pointer;
 	font-family: inherit;
-	transition: all 0.3s;
 	margin: 1em;
 }
 
@@ -101,4 +100,24 @@ button {
 	background: #f2efee;
 	padding: 0 10px;
 	color: #cdd0d4;
+}
+
+.keygen_title {
+	color: #575a5e;
+	font-size: 120%;
+	text-align: center;
+	padding: 1rem;
+	margin-top: 5%;
+	margin-bottom: 10%;
+}
+
+.keygen_keys {
+	color: #cdd0d4;
+	inline-size: 300px;
+	overflow-wrap: break-word;
+	margin-bottom: 10%;
+}
+
+.keygen_keys_content {
+	color: #b06ab3;
 }
