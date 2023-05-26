@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="./css/login.css">
+    <script src="./js/keygen.js" defer></script>
 </head>
 <body>
 
@@ -11,10 +12,10 @@
     <form class="login-form" action="./login.html">
         <div>
             <p class="keygen_keys">Public Key:<br><br>
-                <span class="keygen_keys_content">dfhsghsgfhshshhghfhshshsfhfhgfhshhxshgfhsh</span></p>
+                <span id="publicKey" class="keygen_keys_content"></span></p>
 
             <p class="keygen_keys">Private Key:<br><br>
-                <span class="keygen_keys_content">sdhshghfghdfhfgdhfhgfdhffhgdfhgfgdghggfhdf</span></p>
+                <span id="privateKey" class="keygen_keys_content"></span></p>
         </div>
 
         <button class="btn btn--form" type="submit" value="Return to login">

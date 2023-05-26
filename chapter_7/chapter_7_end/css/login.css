@@ -79,10 +79,6 @@ body {
 	margin: 1em;
 }
 
-button {
-	outline: 1px solid #b06ab3;
-}
-
 .btn--form:hover {
 	background-color: #e5e3e5;
 	color: #b06ab3;
@@ -114,8 +110,17 @@ button {
 .keygen_keys {
 	color: #cdd0d4;
 	inline-size: 300px;
+	font-size: 80%;
 	overflow-wrap: break-word;
 	margin-bottom: 10%;
+	height: 100px;
+	overflow-y: scroll;
+	scrollbar-width: none; /* Hide scrollbar for Firefox */
+	-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+}
+
+.keygen_keys::-webkit-scrollbar {
+	display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
 }
 
 .keygen_keys_content {
