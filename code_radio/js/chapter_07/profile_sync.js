@@ -2,7 +2,7 @@
 // this script is used in tandem with master time recording happening inside radio.js
 
 // broadcast listening time
-export function statsBroadcast(node){
+export function profileBroadcast(node){
     setInterval(() => {
         for (const [key, value] of Object.entries(classicSongs)) {
             node.pubsub.publish(station_1, 
