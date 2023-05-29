@@ -1,5 +1,5 @@
 {
-	"name": "github",
+	"name": "Code Radio",
 	"version": "1.0.0",
 	"description": "",
 	"main": "./code_radio/js/chapter_07/code_radio.js",
@@ -9,7 +9,7 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC",
+	"license": "MIT",
 	"dependencies": {
 		"@chainsafe/libp2p-noise": "^11.0.0",
 		"@libp2p/bootstrap": "^6.0.0",

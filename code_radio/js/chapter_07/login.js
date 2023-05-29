@@ -25,6 +25,7 @@ function logout() {
     // Removing credentials from localStorage
     localStorage.removeItem('pubkey');
     localStorage.removeItem('privkey');
+    localStorage.removeItem('theme');
     
     console.log('Logout successful!');
 
