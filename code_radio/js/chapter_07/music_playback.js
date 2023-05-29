@@ -1,13 +1,8 @@
 // this javascript is used to add additional functionality to the Code Radio application
 
-
-// IndexedDB
-// retrieving music files
-
 var database = "music_database";
 var object_store = "music_files";
 
-/////////////////////////////////////
 function getData(song) {
     // open a read/write db transaction, ready for retrieving the data
     const transaction = db.transaction([object_store]);
@@ -27,9 +22,6 @@ function getData(song) {
         audioURL.loop = true;
     };
 };
-/////////////////////////////////////
-
-
 
 // adding a click event listener for each code radio button
 const classic_audio = document.getElementById('btn-classic');
@@ -41,25 +33,11 @@ ambient_audio.addEventListener("click", play_ambient);
 const lofi_audio = document.getElementById('btn-lofi');
 lofi_audio.addEventListener("click", play_lofi);
 
-// declare playback variables
-// var classic_stream = new Audio("./media/trap_and_ink.wav");
-// var ambient_stream = new Audio("./media/trap_and_ink.wav");
-// var lofi_stream = new Audio("./media/trap_and_ink.wav");
-
 var classic_playing = false;
 var ambient_playing = false;
 var lofi_playing = false;
 
 function play_classic() {
-    // classic_stream.loop = true;
-
-    // ambient_stream.pause();
-    // ambient_stream.currentTime = 0;
-
-    // lofi_stream.pause();
-    // lofi_stream.currentTime = 0;
-
-    /////////////////////////////////////
     // Let us open our database
     const DBOpenRequest = window.indexedDB.open(database, 1);
     DBOpenRequest.onsuccess = (event) => {
@@ -67,15 +45,13 @@ function play_classic() {
         // Run the getData() function to get the data from the database
         getData("trap and ink");
     };
-    /////////////////////////////////////
 
-    audioURL.pause(); /////////////////////////////////////
-    audioURL.currentTime = 0; /////////////////////////////////////
-
+    audioURL.pause(); 
+    audioURL.currentTime = 0; 
     if (!classic_playing){
 
         // classic_stream.play();
-        audioURL.play(); /////////////////////////////////////
+        audioURL.play(); 
         classic_playing = true;
 
         // toggle button styling
@@ -105,7 +81,7 @@ function play_ambient() {
 
     if (!ambient_playing){
         // configure audio stream
-        audioURL.play(); /////////////////////////////////////
+        audioURL.play(); 
         ambient_playing = true;
 
         // toggle button styling
@@ -134,7 +110,7 @@ function play_lofi() {
 
     if (!lofi_playing){
         // configure audio stream
-        audioURL.play(); /////////////////////////////////////
+        audioURL.play(); 
         lofi_playing = true;
 
         // toggle button styling

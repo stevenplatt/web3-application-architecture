@@ -4,9 +4,11 @@ import { tcp } from '@libp2p/tcp'
 import { noise } from '@chainsafe/libp2p-noise'
 import { mplex } from '@libp2p/mplex'
 import { bootstrap } from '@libp2p/bootstrap' 
-import { floodsub } from '@libp2p/floodsub' //////////////// NEW
-import {pubsubListen, pubsubBroadcast} from './music_sync.js' //////////////// NEW
+import { floodsub } from '@libp2p/floodsub' 
+import {pubsubListen, pubsubBroadcast} from './music_sync.js' 
+import * as login from './login.js'
 
+// libp2p configuration
 const bootstrapMultiaddrs = [
     '/ip4/127.0.0.1/tcp/60152/p2p/12D3KooWMUXXvBMjHH8PkAhNQe4iMe4brPgBscdPv2XCXvDEAH44']
 
