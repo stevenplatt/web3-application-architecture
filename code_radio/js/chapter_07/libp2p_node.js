@@ -8,7 +8,7 @@ import { floodsub } from '@libp2p/floodsub' //////////////// NEW
 import {pubsubListen, pubsubBroadcast} from './music_sync.js' //////////////// NEW
 
 const bootstrapMultiaddrs = [
-    '/ip4/127.0.0.1/tcp/65359/p2p/12D3KooWM6fnB3q4E9hTyGYQu1LJTCqjE5ChjSz9NuXK9vGDSMPx']
+    '/ip4/127.0.0.1/tcp/60152/p2p/12D3KooWMUXXvBMjHH8PkAhNQe4iMe4brPgBscdPv2XCXvDEAH44']
 
 const node = await createLibp2p({
     addresses: {listen: ['/ip4/127.0.0.1/tcp/0']},

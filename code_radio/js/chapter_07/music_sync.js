@@ -51,5 +51,5 @@ export function pubsubBroadcast(node){
                 uint8ArrayFromString(`${key}:::${value}`)).catch(err => {
                 console.error(err)})
         }
-    }, 5000)
+    }, 60000)
 }
