@@ -1,0 +1,126 @@
+// this javascript is used to add additional functionality to the Code Radio application
+
+var database = "music_database";
+var object_store = "music_files";
+
+function getData(song) {
+    // open a read/write db transaction, ready for retrieving the data
+    const transaction = db.transaction([object_store]);
+
+    // create an object store on the transaction
+    const objectStore = transaction.objectStore(object_store);
+
+    // Make a request to get a record by key from the object store
+    const objectStoreRequest = objectStore.get(song);
+
+    // Make a request to get a record by key from the object store
+    objectStoreRequest.onsuccess = (event) => {
+        const myRecord = objectStoreRequest.result;
+        console.log(`${myRecord.url}`);
+        const audioURL = document.createElement("audio");
+        audioURL.src = myRecord.url;
+        audioURL.loop = true;
+    };
+};
+
+// adding a click event listener for each code radio button
+const classic_audio = document.getElementById('btn-classic');
+classic_audio.addEventListener("click", play_classic);
+
+const ambient_audio = document.getElementById('btn-ambient');
+ambient_audio.addEventListener("click", play_ambient);
+
+const lofi_audio = document.getElementById('btn-lofi');
+lofi_audio.addEventListener("click", play_lofi);
+
+var classic_playing = false;
+var ambient_playing = false;
+var lofi_playing = false;
+
+function play_classic() {
+    // Let us open our database
+    const DBOpenRequest = window.indexedDB.open(database, 1);
+    DBOpenRequest.onsuccess = (event) => {
+        db = DBOpenRequest.result;
+        // Run the getData() function to get the data from the database
+        getData("trap and ink");
+    };
+
+    audioURL.pause(); 
+    audioURL.currentTime = 0; 
+    if (!classic_playing){
+
+        // classic_stream.play();
+        audioURL.play(); 
+        classic_playing = true;
+
+        // toggle button styling
+        document.getElementById("btn-classic").classList.add("playing");
+        document.getElementById("btn-ambient").classList.remove("playing");
+        document.getElementById("btn-lofi").classList.remove("playing");
+    
+    } else if (classic_playing){
+        // classic_stream.pause();
+        classic_playing = false;
+        document.getElementById("btn-classic").classList.remove("playing");
+    
+    } else {pass;}
+}
+
+function play_ambient() {
+
+    const DBOpenRequest = window.indexedDB.open(database, 1);
+    DBOpenRequest.onsuccess = (event) => {
+        db = DBOpenRequest.result;
+        // Run the getData() function to get the data from the database
+        getData("trap and ink");
+    };
+
+    audioURL.pause();
+    audioURL.currentTime = 0;
+
+    if (!ambient_playing){
+        // configure audio stream
+        audioURL.play(); 
+        ambient_playing = true;
+
+        // toggle button styling
+        document.getElementById("btn-classic").classList.remove("playing");
+        document.getElementById("btn-ambient").classList.add("playing");
+        document.getElementById("btn-lofi").classList.remove("playing");
+    
+    } else if (ambient_playing){
+        ambient_playing = false;
+        document.getElementById("btn-ambient").classList.remove("playing");
+    
+    } else {pass;}
+}
+
+function play_lofi() {
+
+    const DBOpenRequest = window.indexedDB.open(database, 1);
+    DBOpenRequest.onsuccess = (event) => {
+        db = DBOpenRequest.result;
+        // Run the getData() function to get the data from the database
+        getData("trap and ink");
+    };
+
+    audioURL.pause();
+    audioURL.currentTime = 0;
+
+    if (!lofi_playing){
+        // configure audio stream
+        audioURL.play(); 
+        lofi_playing = true;
+
+        // toggle button styling
+        document.getElementById("btn-classic").classList.remove("playing");
+        document.getElementById("btn-ambient").classList.remove("playing");
+        document.getElementById("btn-lofi").classList.add("playing");
+    
+    } else if (lofi_playing){
+        lofi_playing = false;
+        document.getElementById("btn-lofi").classList.remove("playing");
+    
+    } else {pass;}
+}
