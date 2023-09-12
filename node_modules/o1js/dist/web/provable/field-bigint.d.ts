@@ -1,0 +1,138 @@
+import { HashInput } from '../bindings/lib/provable-bigint.js';
+export { Field, Bool, UInt32, UInt64, Sign };
+export { pseudoClass, sizeInBits, checkRange, checkField };
+type Field = bigint;
+type Bool = 0n | 1n;
+type UInt32 = bigint;
+type UInt64 = bigint;
+declare const sizeInBits: number;
+type minusOne = 0x40000000000000000000000000000000224698fc094cf91b992d30ed00000000n;
+declare const minusOne: minusOne;
+type Sign = 1n | minusOne;
+declare const checkField: (x: bigint) => void;
+/**
+ * The base field of the Pallas curve
+ */
+declare const Field: ((value: bigint | number | string) => bigint) & {
+    modulus: bigint;
+    sizeInBits: number;
+    t: bigint;
+    twoadicRoot: bigint;
+    add(x: bigint, y: bigint): bigint;
+    negate(x: bigint): bigint;
+    sub(x: bigint, y: bigint): bigint;
+    mul(x: bigint, y: bigint): bigint;
+    inverse(x: bigint): bigint | undefined;
+    div(x: bigint, y: bigint): bigint | undefined;
+    square(x: bigint): bigint;
+    isSquare(x: bigint): boolean;
+    sqrt(x: bigint): bigint | undefined;
+    power(x: bigint, n: bigint): bigint;
+    dot(x: bigint[], y: bigint[]): bigint;
+    equal(x: bigint, y: bigint): boolean;
+    isEven(x: bigint): boolean;
+    random(): bigint;
+    fromNumber(x: number): bigint;
+    fromBigint(x: bigint): bigint;
+    toBytes(t: bigint): number[];
+    readBytes<N extends number>(bytes: number[], offset: import("../bindings/crypto/non-negative.js").NonNegativeInteger<N>): [value: bigint, offset: number];
+    fromBytes(bytes: number[]): bigint;
+    toBits(t: bigint): boolean[];
+    fromBits(bits: boolean[]): bigint;
+    sizeInBytes(): number;
+    toFields: (x: bigint) => bigint[];
+    toAuxiliary: (x?: bigint | undefined) => any[];
+    fromFields: (x: bigint[], aux: any[]) => bigint;
+    sizeInFields(): number;
+    check: (x: bigint) => void;
+    toInput: (x: bigint) => {
+        fields?: bigint[] | undefined;
+        packed?: [bigint, number][] | undefined;
+    };
+    toJSON: (x: bigint) => string;
+    fromJSON: (x: string) => bigint;
+    emptyValue?: (() => bigint) | undefined;
+};
+/**
+ * A field element which is either 0 or 1
+ */
+declare const Bool: ((value: boolean) => Bool) & {
+    toInput(x: Bool): HashInput;
+    toBoolean(x: Bool): boolean;
+    toJSON(x: Bool): boolean;
+    fromJSON(b: boolean): Bool;
+    sizeInBytes(): 1;
+    fromField(x: Field): 0n | 1n;
+    toBytes(t: Bool): number[];
+    readBytes<N extends number>(bytes: number[], offset: import("../bindings/crypto/non-negative.js").NonNegativeInteger<N>): [value: Bool, offset: number];
+    fromBytes(bytes: number[]): Bool;
+    toBits(t: Bool): boolean[];
+    fromBits(bits: boolean[]): Bool;
+    sizeInBits(): number;
+    toFields: (x: Bool) => bigint[];
+    toAuxiliary: (x?: Bool | undefined) => any[];
+    fromFields: (x: bigint[], aux: any[]) => Bool;
+    sizeInFields(): number;
+    check: (x: Bool) => void;
+    emptyValue?: (() => Bool) | undefined;
+};
+declare const UInt32: ((value: bigint | number | string) => bigint) & {
+    toInput(x: bigint): HashInput;
+    maxValue: bigint;
+    random(): bigint;
+    toBytes(t: bigint): number[];
+    readBytes<N extends number>(bytes: number[], offset: import("../bindings/crypto/non-negative.js").NonNegativeInteger<N>): [value: bigint, offset: number];
+    fromBytes(bytes: number[]): bigint;
+    toBits(t: bigint): boolean[];
+    fromBits(bits: boolean[]): bigint;
+    sizeInBytes(): number;
+    sizeInBits(): number;
+    toFields: (x: bigint) => bigint[];
+    toAuxiliary: (x?: bigint | undefined) => any[];
+    fromFields: (x: bigint[], aux: any[]) => bigint;
+    sizeInFields(): number;
+    check: (x: bigint) => void;
+    toJSON: (x: bigint) => string;
+    fromJSON: (x: string) => bigint;
+    emptyValue?: (() => bigint) | undefined;
+};
+declare const UInt64: ((value: bigint | number | string) => bigint) & {
+    toInput(x: bigint): HashInput;
+    maxValue: bigint;
+    random(): bigint;
+    toBytes(t: bigint): number[];
+    readBytes<N extends number>(bytes: number[], offset: import("../bindings/crypto/non-negative.js").NonNegativeInteger<N>): [value: bigint, offset: number];
+    fromBytes(bytes: number[]): bigint;
+    toBits(t: bigint): boolean[];
+    fromBits(bits: boolean[]): bigint;
+    sizeInBytes(): number;
+    sizeInBits(): number;
+    toFields: (x: bigint) => bigint[];
+    toAuxiliary: (x?: bigint | undefined) => any[];
+    fromFields: (x: bigint[], aux: any[]) => bigint;
+    sizeInFields(): number;
+    check: (x: bigint) => void;
+    toJSON: (x: bigint) => string;
+    fromJSON: (x: string) => bigint;
+    emptyValue?: (() => bigint) | undefined;
+};
+declare const Sign: ((value: 1 | -1) => Sign) & {
+    emptyValue(): 1n;
+    toInput(x: Sign): HashInput;
+    fromFields([x]: Field[]): Sign;
+    toJSON(x: Sign): "Positive" | "Negative";
+    fromJSON(x: 'Positive' | 'Negative'): Sign;
+    toBytes(t: Sign): number[];
+    readBytes<N extends number>(bytes: number[], offset: import("../bindings/crypto/non-negative.js").NonNegativeInteger<N>): [value: Sign, offset: number];
+    fromBytes(bytes: number[]): Sign;
+    toBits(t: Sign): boolean[];
+    fromBits(bits: boolean[]): Sign;
+    sizeInBytes(): number;
+    sizeInBits(): number;
+    toFields: (x: Sign) => bigint[];
+    toAuxiliary: (x?: Sign | undefined) => any[];
+    sizeInFields(): number;
+    check: (x: Sign) => void;
+};
+declare function pseudoClass<F extends (...args: any) => any, M>(constructor: F, module: M): F & M;
+declare function checkRange(lower: bigint, upper: bigint, name: string): (x: bigint) => void;

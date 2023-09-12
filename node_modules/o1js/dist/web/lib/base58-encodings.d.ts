@@ -1,0 +1,2 @@
+export { TokenId, ReceiptChainHash, LedgerHash, EpochSeed, StateHash };
+declare const TokenId: import("./base58.js").Base58<import("./field.js").Field>, ReceiptChainHash: import("./base58.js").Base58<import("./field.js").Field>, EpochSeed: import("./base58.js").Base58<import("./field.js").Field>, LedgerHash: import("./base58.js").Base58<import("./field.js").Field>, StateHash: import("./base58.js").Base58<import("./field.js").Field>;
