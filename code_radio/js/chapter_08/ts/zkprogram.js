@@ -11,21 +11,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const o1js_1 = require("o1js");
-let initialProof;
-let previousProof;
+// these should go into indexedDB
+let initialized = false;
+let listeningTime = 0;
+let listeningGoal = 3;
 let latestProof;
-let listeningGoal = 100;
-function init() {
+function recordListeningTime() {
     return __awaiter(this, void 0, void 0, function* () {
         console.log('o1js loaded');
-        console.log('creating verification key...');
-        const { verificationKey } = yield listeningTime.compile();
-        console.log('creating initial listening time proof');
-        const initialProof = yield listeningTime.init((0, o1js_1.Field)(0));
-        return initialProof;
+        console.log('recording listening time...');
+        generateProof();
+        setInterval(() => {
+            listeningTime += 5;
+            console.log(`Listening time: ${listeningTime} minute(s)`);
+            generateProof(); // this function makes a proof of time at fixed intervals
+        }, 300000); // 300000 milliseconds = 5 minutes
     });
 }
-const listeningTime = o1js_1.Experimental.ZkProgram({
+function generateProof() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (initialized) {
+            console.log(`generating listening time proof with ${listeningTime} minute(s)`);
+            latestProof = yield listeningProof.addNumber((0, o1js_1.Field)(listeningTime), latestProof, (0, o1js_1.Field)(5));
+        }
+        else {
+            //previousProof = await init();
+            console.log("previous listening time proof not found");
+            console.log('creating verification key...');
+            const { verificationKey } = yield listeningProof.compile();
+            console.log('creating initial listening time proof');
+            latestProof = yield listeningProof.init((0, o1js_1.Field)(0));
+            initialized = true;
+            //return latestProof
+        }
+    });
+}
+const listeningProof = o1js_1.Experimental.ZkProgram({
     publicInput: o1js_1.Field,
     methods: {
         init: {
@@ -41,40 +62,11 @@ const listeningTime = o1js_1.Experimental.ZkProgram({
                 newState.assertEquals(earlierProof.publicInput.add(numberToAdd));
             },
         },
-        add: {
-            privateInputs: [o1js_1.SelfProof, o1js_1.SelfProof],
-            method(newState, earlierProof1, earlierProof2) {
-                earlierProof1.verify();
-                earlierProof2.verify();
-                newState.assertEquals(earlierProof1.publicInput.add(earlierProof2.publicInput));
-            },
-        },
     },
 });
-function test() {
+// this function proves listening time surpasses set goal
+function unlockPremium() {
     return __awaiter(this, void 0, void 0, function* () {
-        const output = yield init();
-        console.log(output);
     });
 }
-test();
-//////////////////////////////
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log('o1js loaded');
-        console.log('compiling...');
-        const { verificationKey } = yield listeningTime.compile();
-        console.log('making proof 0');
-        const proof0 = yield listeningTime.init((0, o1js_1.Field)(0));
-        console.log('making proof 1');
-        const proof1 = yield listeningTime.addNumber((0, o1js_1.Field)(4), proof0, (0, o1js_1.Field)(4));
-        console.log('making proof 2');
-        const proof2 = yield listeningTime.add((0, o1js_1.Field)(4), proof1, proof0);
-        console.log('verifying proof 2');
-        console.log('proof 2 data', proof2.publicInput.toString());
-        const ok = yield (0, o1js_1.verify)(proof2.toJSON(), verificationKey);
-        console.log('ok', ok);
-        console.log('Shutting down');
-    });
-}
-//  main();
+recordListeningTime();

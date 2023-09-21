@@ -6,26 +6,51 @@ import {
   Experimental,
   verify,
 } from 'o1js';
-  
-let initialProof;
-let previousProof;
-let latestProof;
 
-let listeningGoal: number = 100;
+// these should go into indexedDB
+let initialized: boolean = false;
+let listeningTime = 0; 
+let listeningGoal: number = 3;
+let latestProof: SelfProof<Field>;
 
-async function init() {
+async function recordListeningTime() {
     console.log('o1js loaded');
+    console.log('recording listening time...');
 
-    console.log('creating verification key...');
-    const { verificationKey } = await listeningTime.compile();
-  
-    console.log('creating initial listening time proof')
-    const initialProof = await listeningTime.init(Field(0));
+    generateProof()
 
-    return initialProof
+    setInterval(() => {
+
+        listeningTime += 5;
+        console.log(`Listening time: ${listeningTime} minute(s)`);
+
+        generateProof() // this function makes a proof of time at fixed intervals
+
+    }, 300000); // 300000 milliseconds = 5 minutes
 }
 
-const listeningTime = Experimental.ZkProgram({
+async function generateProof() {
+    if (initialized) {
+        console.log(`generating listening time proof with ${listeningTime} minute(s)`);
+        latestProof = await listeningProof.addNumber(Field(listeningTime), latestProof, Field(5));
+
+    } else {
+        //previousProof = await init();
+
+        console.log("previous listening time proof not found");
+        console.log('creating verification key...');
+        const { verificationKey } = await listeningProof.compile();
+    
+        console.log('creating initial listening time proof')
+        latestProof = await listeningProof.init(Field(0));
+
+        initialized = true;
+
+        //return latestProof
+    }
+}
+
+const listeningProof = Experimental.ZkProgram({
     publicInput: Field,
   
     methods: {
@@ -45,62 +70,13 @@ const listeningTime = Experimental.ZkProgram({
           newState.assertEquals(earlierProof.publicInput.add(numberToAdd));
         },
       },
-  
-      add: {
-        privateInputs: [ SelfProof, SelfProof ],
-  
-        method(
-          newState: Field, 
-          earlierProof1: SelfProof<Field>,
-          earlierProof2: SelfProof<Field>,
-        ) {
-          earlierProof1.verify();
-          earlierProof2.verify();
-          newState.assertEquals(earlierProof1.publicInput.add(earlierProof2.publicInput));
-        },
-      },
     },
   });
 
-async function test() {
-    const output = await init();
-    console.log(output);
+
+// this function proves listening time surpasses set goal
+async function unlockPremium() {
+    
 }
 
-test();
-
-//////////////////////////////
-
-async function main() {
-  
-    console.log('o1js loaded');
-  
-    console.log('compiling...');
-  
-    const { verificationKey } = await listeningTime.compile();
-  
-    console.log('making proof 0')
-  
-    const proof0 = await listeningTime.init(Field(0));
-  
-    console.log('making proof 1')
-  
-    const proof1 = await listeningTime.addNumber(Field(4), proof0, Field(4));
-  
-    console.log('making proof 2')
-  
-    const proof2 = await listeningTime.add(Field(4), proof1, proof0);
-  
-    console.log('verifying proof 2');
-    console.log('proof 2 data', proof2.publicInput.toString());
-  
-    const ok = await verify(proof2.toJSON(), verificationKey);
-    console.log('ok', ok);
-  
-    console.log('Shutting down');
-  
-  }
-
-//  main();
-
-
+recordListeningTime(); 
