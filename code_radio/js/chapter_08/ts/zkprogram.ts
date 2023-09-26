@@ -1,82 +1,35 @@
-// this zero knowledge application takes a number of listening minutes and generates a zero knowledge proof
+// additional (O)1 Labs example: https://github.com/o1-labs/o1js/blob/main/src/examples/program.ts
+// publicOutput blog post: https://blog.o1labs.org/whats-new-in-snarkyjs-june-2023-8a75e46cd849
+
+// O(1) Labs recursion tutorial: https://docs.minaprotocol.com/zkapps/tutorials/recursion
 
 import {
-  Field,
-  SelfProof,
-  Experimental,
-  verify,
-} from 'o1js';
+    SelfProof,
+    Field,
+    Experimental,
+    Empty,
+  } from 'o1js';
 
-// these should go into indexedDB
-let initialized: boolean = false;
-let listeningTime = 0; 
-let listeningGoal: number = 3;
-let latestProof: SelfProof<Field>;
+let timeIncrement = 5;
 
-async function recordListeningTime() {
-    console.log('o1js loaded');
-    console.log('recording listening time...');
+// declare ZkProgram
+export let listeningProof = Experimental.ZkProgram({
+    publicOutput: Field,
 
-    generateProof()
-
-    setInterval(() => {
-
-        listeningTime += 5;
-        console.log(`Listening time: ${listeningTime} minute(s)`);
-
-        generateProof() // this function makes a proof of time at fixed intervals
-
-    }, 300000); // 300000 milliseconds = 5 minutes
-}
-
-async function generateProof() {
-    if (initialized) {
-        console.log(`generating listening time proof with ${listeningTime} minute(s)`);
-        latestProof = await listeningProof.addNumber(Field(listeningTime), latestProof, Field(5));
-
-    } else {
-        //previousProof = await init();
-
-        console.log("previous listening time proof not found");
-        console.log('creating verification key...');
-        const { verificationKey } = await listeningProof.compile();
-    
-        console.log('creating initial listening time proof')
-        latestProof = await listeningProof.init(Field(0));
-
-        initialized = true;
-
-        //return latestProof
-    }
-}
-
-const listeningProof = Experimental.ZkProgram({
-    publicInput: Field,
-  
     methods: {
-      init: {
-        privateInputs: [],
-  
-        method(state: Field) {
-          state.assertEquals(Field(0));
+        baseCase: {
+            privateInputs: [],
+            method() {
+                return Field(0);
+            },
+            },
+        
+            inductiveCase: {
+            privateInputs: [SelfProof],
+            method(earlierProof: SelfProof<Empty, Field>) {
+                earlierProof.verify();
+                return earlierProof.publicOutput.add(timeIncrement);
+                },
+            },
         },
-      },
-  
-      addNumber: {
-        privateInputs: [SelfProof, Field ],
-  
-        method(newState: Field, earlierProof: SelfProof<Field>, numberToAdd: Field) {
-          earlierProof.verify();
-          newState.assertEquals(earlierProof.publicInput.add(numberToAdd));
-        },
-      },
-    },
-  });
-
-
-// this function proves listening time surpasses set goal
-async function unlockPremium() {
-    
-}
-
-recordListeningTime(); 
+});
