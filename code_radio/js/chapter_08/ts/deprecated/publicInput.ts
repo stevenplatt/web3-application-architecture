@@ -1,3 +1,4 @@
+/* 
 // demonstration of publicInput with o1js
 // this zero knowledge application takes a number of listening minutes and generates a zero knowledge proof
 // listeningTime is used as the publicInput
@@ -78,3 +79,4 @@ const listeningProof = Experimental.ZkProgram({
   });
 
 recordListeningTime(); 
+ */

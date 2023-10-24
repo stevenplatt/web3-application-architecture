@@ -1,3 +1,4 @@
+/* 
 "use strict";
 // demonstration of publicInput with o1js
 // this zero knowledge application takes a number of listening minutes and generates a zero knowledge proof
@@ -68,3 +69,4 @@ const listeningProof = o1js_1.Experimental.ZkProgram({
     },
 });
 recordListeningTime();
+ */
